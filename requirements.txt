@@ -1,0 +1,7 @@
+runhouse
+transformers==4.36.0
+accelerate==0.25.0
+bitsandbytes==0.41.3
+safetensors==0.4.1
+scipy
+pillow
