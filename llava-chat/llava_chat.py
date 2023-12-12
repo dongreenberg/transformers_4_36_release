@@ -17,7 +17,6 @@ class LlavaModel(rh.Module):
                               device_map="auto",
                               torch_dtype=torch.bfloat16,
                               model_kwargs=self.model_kwargs)
-        # self.model = torch.compile(self.model)
 
     def predict(self, img_path, prompt, **inf_kwargs):
         if not self.model:
@@ -34,11 +33,3 @@ if __name__ == "__main__":
                                             "\nASSISTANT:",
                                      max_new_tokens=200)
     print(ans)
-
-
-    # url = "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/transformers/tasks/ai2d-demo.jpg"
-    # # "https://upcdn.io/kW15bGw/raw/uploads/2023/09/22/file-387X.png"
-    # # "USER: <image>\nHow would I make this dish? Step by step please.\nASSISTANT:",
-    # ans = remote_llava_model.predict(img_path=url,
-    #                                  prompt="USER: <image>\nWhat does the label 15 represent? (1) lava (2) core (3) tunnel (4) ash cloud\nASSISTANT:",
-    #                                  max_new_tokens=200)
