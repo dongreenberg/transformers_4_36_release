@@ -21,14 +21,14 @@ class HFChatModel(rh.Module):
             inputs = self.tokenizer(prompt, return_tensors="pt").to("cuda")
             generated_ids = self.model.generate(**inputs,
                                                 streamer=TextStreamer(self.tokenizer) if stream else None,
-                                                **inf_kwargs).to("cuda")
+                                                **inf_kwargs)
         return self.tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
 
 if __name__ == "__main__":
     gpu = rh.cluster(name="rh-4-a10x", instance_type="A100:4")
     remote_hf_chat_model = HFChatModel(model_id="mistralai/Mixtral-8x7B",
-                                       load_in_8bit=True,
+                                       device_map="auto",
                                        torch_dtype=torch.bfloat16).get_or_to(gpu, name="mixtral")
 
     test_prompt = "Why do Machine Learning Engineers let their infra push them around?"
